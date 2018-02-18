@@ -24,6 +24,7 @@ class Button
         uint8_t isReleased();
         uint8_t wasPressed();
         uint8_t wasReleased();
+    uint8_t uniquePress();
         uint8_t pressedFor(uint32_t ms);
         uint8_t releasedFor(uint32_t ms);
         uint32_t lastChange();
