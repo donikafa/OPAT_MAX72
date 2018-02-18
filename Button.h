@@ -1,48 +1,59 @@
-/*----------------------------------------------------------------------*
- * Arduino Button Library v1.0                                          *
- * Jack Christensen Mar 2012                                            *
- *                                                                      *
- * This work is licensed under the Creative Commons Attribution-        *
- * ShareAlike 3.0 Unported License. To view a copy of this license,     *
- * visit http://creativecommons.org/licenses/by-sa/3.0/ or send a       *
- * letter to Creative Commons, 171 Second Street, Suite 300,            *
- * San Francisco, California, 94105, USA.                               *
- *----------------------------------------------------------------------*/
-#ifndef Button_h
-#define Button_h
-#if ARDUINO >= 100
-#include <Arduino.h> 
-#else
-#include <WProgram.h> 
-#endif
+/*
+||
+|| @file Button.h
+|| @version 1.6
+|| @author Alexander Brevig
+|| @contact alexanderbrevig@gmail.com
+||
+|| @description
+|| | Provide an easy way of making buttons
+|| #
+||
+|| @license
+|| | Copyright (c) 2009 Alexander Brevig. All rights reserved.
+|| | This code is subject to AlphaLicence.txt
+|| | alphabeta.alexanderbrevig.com/AlphaLicense.txt
+|| #
+||
+*/
+
+#ifndef BUTTON_H
+#define BUTTON_H
+
+#include "Arduino.h"
 
 #define PULLUP HIGH
 #define PULLDOWN LOW
-class Button
-{
-    public:
-        Button(uint8_t pin, uint8_t puEnable, buttonMode=PULLDOWN, uint8_t invert, uint32_t dbTime);
-     void pullup();
+
+#define CURRENT 0
+#define PREVIOUS 1
+#define CHANGED 2
+
+class Button{
+  public:
+    Button(uint8_t buttonPin, uint8_t buttonMode=PULLDOWN);
+    void pullup();
     void pulldown();
-    uint8_t read();
-        uint8_t isPressed();
-        uint8_t isReleased();
-        uint8_t wasPressed();
-        uint8_t wasReleased();
-    uint8_t uniquePress()
-        uint8_t pressedFor(uint32_t ms);
-        uint8_t releasedFor(uint32_t ms);
-        uint32_t lastChange();
-    
-    private:
-        uint8_t _pin;           //arduino pin number
-        uint8_t _puEnable;      //internal pullup resistor enabled
-        uint8_t _invert;        //if 0, interpret high state as pressed, else interpret low state as pressed
-        uint8_t _state;         //current button state
-        uint8_t _lastState;     //previous button state
-        uint8_t _changed;       //state changed since last read
-        uint32_t _time;         //time of current state (all times are in ms)
-        uint32_t _lastChange;   //time of last state change
-        uint32_t _dbTime;       //debounce time
+    bool isPressed();
+    bool wasPressed();
+    bool stateChanged();
+	bool uniquePress();
+  private:
+    uint8_t pin;
+    uint8_t mode;
+    uint8_t state;
 };
+
 #endif
+
+/*
+|| @changelog
+|| | 1.6 2009-05-05 - Alexander Brevig : Added uniquePress, it returns true if the state has changed AND the button is pressed
+|| | 1.5 2009-04-24 - Alexander Brevig : Added stateChanged, @contribution http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?action=viewprofile;username=klickadiklick
+|| | 1.4 2009-04-24 - Alexander Brevig : Added wasPressed, @contribution http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?action=viewprofile;username=klickadiklick
+|| | 1.3 2009-04-12 - Alexander Brevig : Added constructor with one parameter Button(uint8_t buttonPin)
+|| | 1.2 2009-04-10 - Alexander Brevig : Namechange from Switch to Button
+|| | 1.1 2009-04-07 - Alexander Brevig : Altered API
+|| | 1.0 2008-10-23 - Alexander Brevig : Initial Release
+|| #
+*/
