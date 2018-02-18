@@ -15,16 +15,21 @@
 #else
 #include <WProgram.h> 
 #endif
+
+#define PULLUP HIGH
+#define PULLDOWN LOW
 class Button
 {
     public:
-        Button(uint8_t pin, uint8_t puEnable, uint8_t invert, uint32_t dbTime);
-        uint8_t read();
+        Button(uint8_t pin, uint8_t puEnable, buttonMode=PULLDOWN, uint8_t invert, uint32_t dbTime);
+     void pullup();
+    void pulldown();
+    uint8_t read();
         uint8_t isPressed();
         uint8_t isReleased();
         uint8_t wasPressed();
         uint8_t wasReleased();
-    uint8_t uniquePress();
+    uint8_t uniquePress()
         uint8_t pressedFor(uint32_t ms);
         uint8_t releasedFor(uint32_t ms);
         uint32_t lastChange();
