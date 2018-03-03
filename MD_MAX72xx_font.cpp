@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 #include <Arduino.h>
 #include "MD_MAX72xx.h"
 #include "MD_MAX72xx_lib.h"
-
+#define nullptr NULL
 /**
  * \file
  * \brief Implements font definition and methods
